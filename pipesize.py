@@ -206,6 +206,7 @@ df_msmLink = df_msmLink.set_index('muid')
 df_msmLink['usrorigdiam'].count()
 
 
+# the following should look nicer using using pandas.series.count
 if len(df_msmLink.loc[df_msmLink['usrorigdiam'] > 0]) == 0:
     print('Column usrOrigDiam is empty. All records in msm_Link will be used: ' + str(len(df_msmLink)))
 else:
