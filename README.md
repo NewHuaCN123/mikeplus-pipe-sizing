@@ -41,13 +41,13 @@ Slope????
 
 Place script, MIKE+ \*.sqlite-database and the \*.res1d-file into the same directory, in below example 'C:\Users\tht\myDemo>pipesize.py'. Ideally, you’ve configured MIKE+ so that the res1d is automatically saved into the database’s directory after each simulation run.
 
-image
+![xxx](./images/dimensionierung_verzeichnis.png)
 
 ### 1. Run HD simulation in MIKE+
 
 Run th HD simulation with the current diameters. Load the results and check the hydraulics in a longitudinal profile.
 
-image
+imgage
 
 If not already the case, copy the result file \*\_Network.res1d in the same as the MIKE+ sqlite-database.
 
