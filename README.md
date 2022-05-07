@@ -39,9 +39,9 @@ Slope????
 
 ## Workflow
 
-Place script, MIKE+ \*.sqlite-database and the \*.res1d-file into the same directory, in below example 'C:\Users\tht\myDemo>pipesize.py'. Ideally, you’ve configured MIKE+ so that the res1d is automatically saved into the database’s directory after each simulation run.
+Place script, MIKE+ \*.sqlite-database and the \*.res1d-file into the same directory. Ideally, you’ve configured MIKE+ so that the res1d is automatically saved into the database’s directory after each simulation run.
 
-![xxx](./images/dimensionierung_verzeichnis.png)
+![xxx](./images/dimensionierung_verzeichnis2.png)
 
 ### 1. Run HD simulation in MIKE+
 
@@ -58,19 +58,53 @@ Open the command window and run the script:
 ```
 C:\Users\tht\myDemo>pipesize.py
 ```
-This step changes the diameters in the MIKE+ database.
+The script issues various messages:
 
-### 3. Refresh visuals in MIKE+
+```
+c:\Users\tht\myDemo>python pipesize.py
+Importing necessary libraries...
+Defining functions...
+Searching res1d and sqlite files...
+Current directory: c:\Users\tht\myDemo
+Number of res1d-files in directory: 2
+Latest res1d-file will be used: s10_BaseDefault_Network_HD.res1d
+Current MIKE+ database: mp22GettingStartedCS.sqlite
+Creating list of links from res1d...
+Preparing desired link results...
+Connecting to database and retreiving msm_Link data...
+All records in msm_Link: 9
+Records in msm_Link with given usrOrigDiam: 7
+Remaining records in msm_Link with value in column Manning: 7
+ATTENTION: Method doesn' work with negative slope.
+Dropping records with a negative slope: 1
+Remaining records with a positive slope : 6
+Joining msm_Link with Link results...
+Computing new diameter...
+Records with increased diameter: 6
+Reducing dataframe and converting back to list of tuples...
+Updating database...
+6 records updated
 
-Run a new HD simulation with the new diamaters.
+c:\Users\tht\myDemo>
+```
 
-Load the results into MIKE+.
+The last line tells you how many pipes were updated in the MIKE+ database. 
+
+
+
+### 3. Run a new simulation and refresh visuals in MIKE+
+
+Run a new HD simulation. It uses the diamaters adapted by the script.
+
+Refresh the results in the results panel:
+
+images
 
 Reload the longitudinal profile, to see both the new diameters and the corresponding results.
 
-image
+images
 
-If you are looking at the "Pipes and Canals" table, apply and then remove some filter, in order to refresh the table content.
+In case you are looking at the "Pipes and Canals" table, apply and then remove some filter, in order to refresh the table content.
 
 ### Repeat steps 2. and 3. until satisfied
 
