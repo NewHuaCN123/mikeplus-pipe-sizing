@@ -41,13 +41,13 @@ Slope????
 
 Place script, MIKE+ \*.sqlite-database and the \*.res1d-file into the same directory. Ideally, you’ve configured MIKE+ so that the res1d is automatically saved into the database’s directory after each simulation run.
 
-![xxx](./images/dimensionierung_verzeichnis2.png)
+![working directory](./images/dimensionierung_verzeichnis2.png)
 
 ### 1. Run HD simulation in MIKE+
 
 Run th HD simulation with the current diameters. Load the results and check the hydraulics in a longitudinal profile.
 
-imgage
+![profile v01](./images/dimensionierung_profil-v01.png)
 
 If not already the case, copy the result file \*\_Network.res1d in the same as the MIKE+ sqlite-database.
 
@@ -98,11 +98,11 @@ Run a new HD simulation. It uses the diamaters adapted by the script.
 
 Refresh the results in the results panel:
 
-images
+![refresh results](./images/dimensionierung_results-refresh.png)
 
 Reload the longitudinal profile, to see both the new diameters and the corresponding results.
 
-images
+![profile v02](./images/dimensionierung_profil-v02.png)
 
 In case you are looking at the "Pipes and Canals" table, apply and then remove some filter, in order to refresh the table content.
 
