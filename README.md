@@ -94,7 +94,9 @@ The last line tells you how many pipes were updated in the MIKE+ database.
 
 ### 3. Run a new simulation and refresh visuals in MIKE+
 
-Run a new HD simulation. It uses the diamaters adapted by the script.
+Run a new HD simulation, which now uses the diamaters adapted by the script:
+
+![active simulation](./images/dimensionierung_active-simulation.png)
 
 Refresh the results in the results panel:
 
@@ -108,9 +110,9 @@ In case you are looking at the "Pipes and Canals" table, apply and then remove s
 
 ### Repeat steps 2. and 3. until satisfied
 
-Increasing the pipe diameters will increase the peak discharges, especially if the previous setup experienced flooding. But larger peak discharges will lead to even larger diameters! Therefore you may need a few iterations until the pipe diameters don't change any more.
+Increasing the pipe diameters will increase the peak discharges, especially if the previous setup experienced flooding. But in turn larger peak discharges will lead to even larger diameters! Therefore you may need a few iterations until the pipe diameters don't change any more.
 
-image
+![profile v05](./images/dimensionierung_profil-v05.png)
 
 ## Technical details
 
