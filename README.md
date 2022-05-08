@@ -21,7 +21,9 @@ The script has been tested with MIKE+ 2022, but it should work with earlier vers
 
 ## Preparing MIKE+
 
-The script relies on a user defined field **“usrOrigDiam”** in table msm_Link. This field serves two purposes:
+We need some preparations in the "Pipes and Canals" editor or in table msm_Link respectively.
+
+The script relies on a user defined field **“usrOrigDiam”**.  This field serves two purposes:
 
   - It tells the script which pipes to alter, as the script only changes “Diameter” in pipes where “usrOrigDiam” has a value. The other pipes remain unchanged. Caution, if *all* "usrOrigDiam" are empty, the script will change *all* pipes (I may modify this behavior in the future as it looks a bit dangerous).
   - Once the process is finished you can use the field to compare the final diameter with the original diameter.
@@ -35,7 +37,7 @@ The script assumes circular pipes. Look out for other cross section while popula
 
 The script uses field **"Manning"**, which is the local "per pipe" value. Please populate this field, even if your HD simulation uses the material specific values.
 
-Slope????
+The script uses field **Slope** from the database. Please press "Calculate" in order to refresh the various derived fields inlcuding 'Slope'. 
 
 ## Workflow
 
