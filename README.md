@@ -122,13 +122,15 @@ The script uses field "Manning" from the Pipes and Canals editor, which is the l
 
 The Manning formula doesn't work with zero or negative bed slope, hence the script doesn't change pipes with such values.
 
-The script doesn't apply the Manning formula directly, but takes into account that only specifice pipe diameters are available on the market. Per default the diameters have a step size of 50 mm, meaning that the script will use 50, 100, 150 etc. Change parameter ??? if you prefer a different step size. There is no minimum or maximum diameter implemented yet.
+The script doesn't apply the Manning formula directly, but takes into account that only specifice pipe diameters are available on the market. Per default the diameters have a step size of 50 mm, meaning that the script will use 50, 100, 150 etc. Change parameter *step* at the top of the script if you prefer a different step size like 100 mm. You can't disable the stepping, instead use a very small value like 0.1.
+
+There is no minimum or maximum diameter implemented yet.
 
 The script doesn't check for a vertical cover above the pipe. In the worst case the pipe crown might rise over ground level.
 
 If there are several res1d-files in the directory, the script will use the latest one. This is useful when progressing in several iterations like described above. If you creat both \*\_Surface_runoff.res1d and \*\_Network_HD.res1d at the same time, it will use the HD file (because in the aphabetical order it comes first). If for some reason the chosen res1d file is not a network HD file, the script will fail with some error message.
 
-The script does not work if MIKE+ uses a PostGreSQL database.
+The script does not work if MIKE+ uses a PostGreSQL database instead of a SQLite database.
 
 
 
