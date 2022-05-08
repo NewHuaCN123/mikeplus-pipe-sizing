@@ -4,7 +4,14 @@
 # Script reuses input by Gediminas Kiršanskas gedaskir
 
 
-# # Import necessary libraries
+#### Global parameters ####
+
+# Per default the diameters have a step size of 50 mm, meaning that the script will use 50 mm, 100 mm, 150 mm, ...
+# Change 'step' if you prefer e.g. 100 mm. Parameter used in section 'Find next commercially available diameter'.
+step = 50
+
+
+#### Import necessary libraries ####
 
 print('Importing necessary libraries...')
 
@@ -32,7 +39,7 @@ from fnmatch import fnmatch
 # print(mikeio1d.__file__)
 
 
-# # Define functions
+#### Define functions ####
 
 print('Defining functions...')
 
@@ -90,7 +97,7 @@ def get_minmax_value_result_file(reach, times_list, quantity_id="Discharge"):
     return min_value, min_time, max_value, max_time
 
 
-# # Find res1d and sqlite files
+#### Find res1d and sqlite files ####
 
 print('Searching res1d and sqlite files...')
 
@@ -128,7 +135,7 @@ oneSQLiteFile = mySQLiteFiles[0]
 print('Current MIKE+ database: ' + oneSQLiteFile)
 
 
-# # Create list of links from res1d
+#### Create list of links from res1d ####
 
 print('Creating list of links from res1d...')
 
@@ -143,7 +150,7 @@ times_list  = list(res1d.data.TimesList)
 simulation_start = res1d.data.StartTime
 
 
-# # Prepare desired Link results
+#### Prepare desired Link results ####
 
 print('Preparing desired link results...')
 
@@ -178,7 +185,7 @@ df_res1dLink=pd.DataFrame(dict_res1d_links)
 # set index on Link_ID:
 df_res1dLink =  df_res1dLink.set_index('Link_ID')
 
-# # Connect to database and retreive msm_Link data
+#### Connect to database and retreive msm_Link data ####
 
 print('Connecting to database and retreiving msm_Link data...')
 
@@ -195,13 +202,13 @@ df_msmLink = pd.read_sql_query("SELECT MUID, diameter, slope, Manning, usrOrigDi
 df_msmLink = df_msmLink.set_index('muid')
 
 
-# # Drop records of no interest
+#### Drop records of no interest ####
 
 # only used when checking speed:
 # tic = time.perf_counter()
 
 
-# ## Check column usrOrigData
+##### Check column usrOrigData #####
 
 df_msmLink['usrorigdiam'].count()
 
@@ -215,7 +222,7 @@ else:
     print('Records in msm_Link with given usrOrigDiam: ' + str(len(df_msmLink)))
 
 
-# ## Make sure all records have a value in column Manning
+##### Make sure all records have a value in column Manning #####
 
 countEmptyManning = len(df_msmLink.loc[df_msmLink['manning'].isna()])
 
@@ -227,7 +234,7 @@ if countEmptyManning > 0:
 print('Remaining records in msm_Link with value in column Manning: ' + str(len(df_msmLink)))    
 
 
-# ## Records with negative slope or without local Manning
+##### Records with negative slope or without local Manning #####
 
 df_msmLink.loc[df_msmLink['slope']<0]
 
@@ -246,19 +253,19 @@ print('Remaining records with a positive slope : ' + str(len(df_msmLink)))
 # print(tac-tic)
 
 
-# # Join msm_Link with Link results
+#### Join msm_Link with Link results ####
 
 print('Joining msm_Link with Link results...')
 
 
 dfm = pd.merge(df_res1dLink, df_msmLink, left_index=True, right_index=True)
 
-# # Compute new diameter
+#### Compute new diameter ####
 
 print('Computing new diameter...')
 
 
-# ## Apply formula
+##### Apply formula #####
 
 def designDiam(Q, I, M):
     D = Q ** 0.375 * (0.312 * (I/100) ** 0.5 * M) ** -0.375
@@ -272,10 +279,10 @@ def designDiam(Q, I, M):
 dfm['newdiameter'] = designDiam(dfm['Qmax'], dfm['slope'], dfm['manning'])
 
 
-# ## Only keep records where new diameter larger than original diamater
+##### Only keep records where new diameter larger than original diamater #####
 
 dfm = dfm.loc[dfm['newdiameter'] > dfm['usrorigdiam']]
-print('Records with increased diameter: ' + str(len(dfm[dfm.newdiameter > dfm.usrorigdiam])))
+print('Records with diameter larger than original: ' + str(len(dfm[dfm.newdiameter > dfm.usrorigdiam])))
 
 
 # only used when checking speed:
@@ -283,13 +290,19 @@ print('Records with increased diameter: ' + str(len(dfm[dfm.newdiameter > dfm.us
 # print(toc-tic)
 
 
-# ## Find next available diameter
+##### Find next commercially available diameter #####
 
-step = 100
+# Parameter 'step' is defined at the beginning of the script.
 dfm['newdiameter'] = np.ceil(dfm.newdiameter * 1000 / step) / (1000 / step)
-# # Write diameter back to MIKE+ database
+##### Only keep records where new diameter is different from last iteration #####
 
-# ## Reduce dataframe and convert back to list of tuples
+dfm = dfm.loc[dfm['newdiameter'] != dfm['diameter']]
+print('Records with diameter different from last iteration: ' + str(len(dfm)))
+
+
+#### Write diameter back to MIKE+ database ####
+
+##### Reduce dataframe and convert back to list of tuples #####
 
 print('Reducing dataframe and converting back to list of tuples...')
 
@@ -306,11 +319,9 @@ dfr = dfm[["newdiameter"]]
 
 # https://stackoverflow.com/questions/9758450/pandas-convert-dataframe-to-array-of-tuples
 data = list(dfr.itertuples(name=None))
-
 # sql command needs diameter as first parameter and muid as second parameter
 datarev =  [tuple(reversed(t)) for t in data]
-
-# ## Update sqlite database
+##### Update sqlite database #####
 
 print('Updating database...')
 
@@ -337,4 +348,5 @@ print(str(n) + ' records updated')
 # Wait for input. If the script was started with double click, the command window will close.
 # If the script was started within the command window, the window remains open.
 # input('Press ENTER to finish')
+
 
