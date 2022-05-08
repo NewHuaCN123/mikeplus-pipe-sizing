@@ -39,6 +39,9 @@ The script uses field **"Manning"**, which is the local "per pipe" value. Please
 
 The script uses field **Slope** from the database. Please press "Calculate" in order to refresh the various derived fields inlcuding 'Slope'. 
 
+
+![calculate slope](./images/dimensionierung_calculate-slope.png)
+
 ## Workflow
 
 Place script, MIKE+ \*.sqlite-database and the \*.res1d-file into the same directory. Ideally, you’ve configured MIKE+ so that the res1d is automatically saved into the database’s directory after each simulation run.
