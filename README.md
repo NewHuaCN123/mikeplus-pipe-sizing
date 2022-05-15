@@ -19,6 +19,10 @@ You need Python 3.8. Then have to install [MIKE IO 1D](https://github.com/DHI/mi
 
 The script has been tested with MIKE+ 2022, but it should work with earlier versions too.
 
+## Demonstration model
+
+The release inlcudes a demonstration model with the initial result, before running the script.
+
 ## Preparing MIKE+
 
 We need some preparations in the "Pipes and Canals" editor or in table msm_Link respectively.
