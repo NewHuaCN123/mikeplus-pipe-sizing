@@ -4,6 +4,7 @@ A script for sizing the pipes in a MIKE+ database.
 
   - [Introduction](#introduction)
   - [Prerequisites](#prerequisites)
+  - [Demonstration model](#demonstration-model)
   - [Preparing MIKE+](#preparing-mike)
   - [Workflow](#workflow)
   - [Technical details](#technical-details)
@@ -21,7 +22,7 @@ The script has been tested with MIKE+ 2022, but it should work with earlier vers
 
 ## Demonstration model
 
-The release inlcudes a demonstration model with the initial result, before running the script.
+The release package inlcudes a demonstration model with the initial result, before running the script.
 
 ## Preparing MIKE+
 
