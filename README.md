@@ -1,4 +1,4 @@
-# mikeplus-pipe-sizing
+# MIKE+ Pipe Sizing
 
 A script for sizing the pipes in a MIKE+ database.
 
